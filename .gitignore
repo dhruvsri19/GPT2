@@ -1,0 +1,41 @@
+# Build artifacts
+build/
+bin/
+lib/
+out/
+dist/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.pyd
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+CMakeUserPresets.json
+Makefile
+cmake_install.cmake
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+.pytest_cache/
+.poetry/
+pip-wheel-metadata/
+
+# IDE configurations
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# GPT-2 weights (ignore all files in weights directory except .gitkeep)
+weights/*
+!weights/.gitkeep
