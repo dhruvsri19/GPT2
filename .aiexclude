@@ -1,0 +1,2 @@
+# Disable code predictions and context indexing for specific files
+include/gpt2/tensor.hpp

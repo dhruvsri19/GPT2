@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/dhruvsrivastava/Developer/gpt2/build",
+  "command": "/usr/bin/c++  -I/Users/dhruvsrivastava/Developer/gpt2/include -std=gnu++17 -arch arm64 -o CMakeFiles/main.dir/src/main.cpp.o -c /Users/dhruvsrivastava/Developer/gpt2/src/main.cpp",
+  "file": "/Users/dhruvsrivastava/Developer/gpt2/src/main.cpp",
+  "output": "CMakeFiles/main.dir/src/main.cpp.o"
+}
+]
