@@ -41,3 +41,28 @@ Tensor softmax(const Tensor &a) {
   }
   return res;
 }
+
+Tensor layernorm(const Tensor &t, const Tensor &gamma, const Tensor &beta) {
+  Tensor result(t.shape);
+  for (int i = 0; i < t.shape[0]; i++) {
+    float mu = 0.0f;
+    for (int j = 0; j < t.shape[1]; j++) {
+      mu += t.get(i, j);
+    }
+    mu /= t.shape[1];
+
+    float var = 0.0f;
+    for (int j = 0; j < t.shape[1]; j++) {
+      var += (t.get(i, j) - mu) * (t.get(i, j) - mu);
+    }
+    var /= t.shape[1];
+
+    const float epsilon = 1e-5;
+    for (int j = 0; j < t.shape[1]; j++) {
+      float normalized = (t.get(i, j) - mu) / std::sqrt(var + epsilon);
+      float output = normalized * gamma.get(0, j) + beta.get(0, j);
+      result.set(i, j, output);
+    }
+  }
+  return result;
+}

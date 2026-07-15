@@ -19,5 +19,18 @@ int main() {
   std::cout << result.get(0, 0) << " " << result.get(0, 1) << std::endl;
   std::cout << result.get(1, 0) << " " << result.get(1, 1) << std::endl;
 
+  Tensor gamma({1, 2});
+  gamma.set(0, 0, 1.0f);
+  gamma.set(0, 1, 1.0f);
+  Tensor beta({1, 2});
+  beta.set(0, 0, 0.0f);
+  beta.set(0, 1, 0.0f);
+  Tensor layer_normalized_t = layernorm(t, gamma, beta);
+  std::cout << "layer_normalized_t = " << std::endl;
+  std::cout << layer_normalized_t.get(0, 0) << " "
+            << layer_normalized_t.get(0, 1) << std::endl;
+  std::cout << layer_normalized_t.get(1, 0) << " "
+            << layer_normalized_t.get(1, 1) << std::endl;
+
   return 0;
 }
