@@ -13,7 +13,7 @@ public:
     }
     data = std::vector<float>(total_size, 0.0f);
   }
-  float get(int row, int col) {
+  float get(int row, int col) const {
     if (row < 0 || row >= shape[0] || col < 0 || col >= shape[1]) {
       throw std::out_of_range("Exceeded");
     }
