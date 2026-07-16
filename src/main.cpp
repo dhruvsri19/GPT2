@@ -32,5 +32,13 @@ int main() {
   std::cout << layer_normalized_t.get(1, 0) << " "
             << layer_normalized_t.get(1, 1) << std::endl;
 
+  Tensor t1({1, 3});
+  t1.set(0, 0, -1.0f);
+  t1.set(0, 1, 0.0f);
+  t1.set(0, 2, 3.0f);
+  Tensor gelu_result = gelu(t1);
+  std::cout << "gelu of t1 = " << std::endl;
+  std::cout << gelu_result.get(0, 0) << " " << gelu_result.get(0, 1) << " "
+            << gelu_result.get(0, 2) << std::endl;
   return 0;
 }
