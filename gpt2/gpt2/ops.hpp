@@ -3,7 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 
-Tensor matmul(const Tensor &a, const Tensor &b) {
+Tensor matmul(Tensor &a, Tensor &b) {
   if (a.shape.size() < 2 || b.shape.size() < 2) {
     throw std::invalid_argument("matmul expects at least 2D tensors");
   }
@@ -23,7 +23,7 @@ Tensor matmul(const Tensor &a, const Tensor &b) {
   return result;
 }
 
-Tensor softmax(const Tensor &a) {
+Tensor softmax(Tensor &a) {
   Tensor res(a.shape);
   for (int i = 0; i < a.shape[0]; i++) {
     float max_ele = a.get(i, 0);
@@ -42,26 +42,42 @@ Tensor softmax(const Tensor &a) {
   return res;
 }
 
-Tensor layernorm(const Tensor &t, const Tensor &gamma, const Tensor &beta) {
-  Tensor result(t.shape);
+Tensor layernorm(Tensor &t, Tensor &gamma, Tensor &beta) {
+  Tensor result = Tensor(t.shape);
   for (int i = 0; i < t.shape[0]; i++) {
-    float mu = 0.0f;
+    float mu = 0;
+    float var = 0;
+    float normalized = 0;
+    float output = 0;
+    float epsilon = 1e-5;
     for (int j = 0; j < t.shape[1]; j++) {
       mu += t.get(i, j);
     }
     mu /= t.shape[1];
 
-    float var = 0.0f;
     for (int j = 0; j < t.shape[1]; j++) {
       var += (t.get(i, j) - mu) * (t.get(i, j) - mu);
     }
     var /= t.shape[1];
 
-    const float epsilon = 1e-5;
     for (int j = 0; j < t.shape[1]; j++) {
-      float normalized = (t.get(i, j) - mu) / std::sqrt(var + epsilon);
-      float output = normalized * gamma.get(0, j) + beta.get(0, j);
+      normalized = (t.get(i, j) - mu) / sqrt(var + epsilon);
+      output = normalized * gamma.get(0, j) + beta.get(0, j);
       result.set(i, j, output);
+    }
+  }
+  return result;
+}
+
+Tensor gelu(Tensor &a) {
+  Tensor result = Tensor(a.shape);
+  for (int i = 0; i < a.shape[0]; i++) {
+    for (int j = 0; j < a.shape[1]; j++) {
+      float x = a.get(i, j);
+      result.set(i, j,
+                 0.5 * x *
+                     (1 + std::tanh(std::sqrt(2.0 / M_PI) *
+                                    (x + 0.044715 * std::pow(x, 3)))));
     }
   }
   return result;
