@@ -8,7 +8,7 @@ Tensor matmul(Tensor &a, Tensor &b) {
     throw std::invalid_argument("matmul expects at least 2D tensors");
   }
   if (a.shape[1] != b.shape[0]) {
-    throw std::invalid_argument("Matrices shape mismatch");
+    throw std::invalid_argument("Shapes Are Mismatched");
   }
   Tensor result({a.shape[0], b.shape[1]});
   for (int i = 0; i < a.shape[0]; i++) {
@@ -81,4 +81,25 @@ Tensor gelu(Tensor &a) {
     }
   }
   return result;
+}
+
+Tensor transpose(Tensor &a) {
+  Tensor result({a.shape[1], a.shape[0]});
+  for (int i = 0; i < a.shape[0]; i++) {
+    for (int j = 0; j < a.shape[1]; j++) {
+      result.set(j, i, a.get(i, j));
+    }
+  }
+  return result;
+}
+
+void reshape(Tensor &a, std::vector<int> new_shape) {
+  int new_total = 1;
+  for (int i = 0; i < new_shape.size(); i++) {
+    new_total *= new_shape[i];
+  }
+  if (new_total != a.data.size()) {
+    throw std::invalid_argument("Reshape Failed");
+  }
+  a.shape = new_shape;
 }

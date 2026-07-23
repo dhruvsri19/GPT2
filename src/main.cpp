@@ -2,6 +2,7 @@
 #include "gpt2/tensor.hpp"
 #include <iostream>
 using namespace std;
+
 int main() {
   Tensor t({2, 2});
   t.set(0, 0, 1.0f);
@@ -40,5 +41,58 @@ int main() {
   std::cout << "gelu of t1 = " << std::endl;
   std::cout << gelu_result.get(0, 0) << " " << gelu_result.get(0, 1) << " "
             << gelu_result.get(0, 2) << std::endl;
+
+  // ---- Test transpose ----
+  Tensor t2({2, 3});
+  int val = 0;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 3; j++) {
+      t2.set(i, j, (float)val++);
+    }
+  }
+  std::cout << "t2 (before transpose), shape " << t2.shape[0] << "x"
+            << t2.shape[1] << " = " << std::endl;
+  for (int i = 0; i < t2.shape[0]; i++) {
+    for (int j = 0; j < t2.shape[1]; j++) {
+      std::cout << t2.get(i, j) << " ";
+    }
+    std::cout << std::endl;
+  }
+
+  Tensor t2_transposed = transpose(t2);
+  std::cout << "t2 transposed, shape " << t2_transposed.shape[0] << "x"
+            << t2_transposed.shape[1] << " = " << std::endl;
+  for (int i = 0; i < t2_transposed.shape[0]; i++) {
+    for (int j = 0; j < t2_transposed.shape[1]; j++) {
+      std::cout << t2_transposed.get(i, j) << " ";
+    }
+    std::cout << std::endl;
+  }
+
+  Tensor t3({2, 6});
+  val = 0;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 6; j++) {
+      t3.set(i, j, (float)val++);
+    }
+  }
+
+  reshape(t3, {3, 4});
+  std::cout << "t3 reshaped to " << t3.shape[0] << "x" << t3.shape[1] << " = "
+            << std::endl;
+  for (int i = 0; i < t3.shape[0]; i++) {
+    for (int j = 0; j < t3.shape[1]; j++) {
+      std::cout << t3.get(i, j) << " ";
+    }
+    std::cout << std::endl;
+  }
+
+  try {
+    reshape(t3, {3, 5});
+    std::cout << "ERROR: reshape should have thrown but didn't" << std::endl;
+  } catch (const std::invalid_argument &e) {
+    std::cout << "Correctly threw: " << e.what() << std::endl;
+  }
+
   return 0;
 }
