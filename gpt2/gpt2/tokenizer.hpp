@@ -18,4 +18,15 @@ public:
     }
     return it->second;
   }
+
+  int add_token(std::string word) {
+    auto it = token_to_int.find(word);
+    if (it != token_to_int.end()) {
+      return it->second;
+    }
+    int new_id = token_to_int.size();
+    token_to_int[word] = new_id;
+    int_to_token[new_id] = word;
+    return new_id;
+  }
 };
