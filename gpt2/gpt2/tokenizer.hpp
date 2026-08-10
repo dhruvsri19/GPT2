@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -28,5 +29,15 @@ public:
     token_to_int[word] = new_id;
     int_to_token[new_id] = word;
     return new_id;
+  }
+
+  std::vector<int> encode(std::string text) {
+    std::stringstream ss(text);
+    std::vector<int> ids;
+    std::string word;
+    while (ss >> word) {
+      ids.push_back(add_token(word));
+    }
+    return ids;
   }
 };

@@ -1,5 +1,6 @@
 #include "gpt2/ops.hpp"
 #include "gpt2/tensor.hpp"
+#include "gpt2/tokenizer.hpp"
 #include <iostream>
 using namespace std;
 
@@ -94,5 +95,11 @@ int main() {
     std::cout << "Correctly threw: " << e.what() << std::endl;
   }
 
+  tokenizer tok;
+  std::vector<int> ids = tok.encode("the cat sat on the mat");
+  for (int i = 0; i < ids.size(); i++) {
+    std::cout << ids[i] << "";
+  }
+  std::cout << std::endl;
   return 0;
 }
