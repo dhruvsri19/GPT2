@@ -40,4 +40,16 @@ public:
     }
     return ids;
   }
+
+  std::string decode(std::vector<int> ids) {
+    std::string result;
+    for (int id : ids) {
+      auto it = int_to_token.find(id);
+      if (it == int_to_token.end()) {
+        throw std::runtime_error("Token Not Found");
+      }
+      result += it->second + " ";
+    }
+    return result;
+  }
 };

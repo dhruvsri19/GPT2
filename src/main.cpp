@@ -101,5 +101,8 @@ int main() {
     std::cout << ids[i] << "";
   }
   std::cout << std::endl;
+
+  std::string decode_result = tok.decode(ids);
+  std::cout << "decode_result = " << decode_result << std::endl;
   return 0;
 }
