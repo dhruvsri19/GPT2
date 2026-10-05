@@ -104,5 +104,18 @@ int main() {
 
   std::string decode_result = tok.decode(ids);
   std::cout << "decode_result = " << decode_result << std::endl;
+
+  // ---- Test init_random ----
+  Tensor rand_t({2, 4});
+  init_random(rand_t);
+  std::cout << "rand_t (shape " << rand_t.shape[0] << "x" << rand_t.shape[1]
+            << ") = " << std::endl;
+  for (int i = 0; i < rand_t.shape[0]; i++) {
+    for (int j = 0; j < rand_t.shape[1]; j++) {
+      std::cout << rand_t.get(i, j) << " ";
+    }
+    std::cout << std::endl;
+  }
+
   return 0;
 }

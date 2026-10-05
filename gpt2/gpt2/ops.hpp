@@ -1,6 +1,8 @@
+#pragma once
 #include "tensor.hpp"
 #include <cmath>
 #include <iostream>
+#include <random>
 #include <stdexcept>
 
 Tensor matmul(Tensor &a, Tensor &b) {
@@ -102,4 +104,12 @@ void reshape(Tensor &a, std::vector<int> new_shape) {
     throw std::invalid_argument("Reshape Failed");
   }
   a.shape = new_shape;
+}
+
+void init_random(Tensor &a) {
+  std::mt19937 gen(42);
+  std::normal_distribution<float> dist(0.0f, 0.02f);
+  for (size_t i = 0; i < a.data.size(); i++) {
+    a.data[i] = dist(gen);
+  }
 }
