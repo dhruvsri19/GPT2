@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
@@ -52,4 +53,6 @@ public:
     }
     return result;
   }
+
+  size_t vocab_size() { return token_to_int.size(); }
 };
