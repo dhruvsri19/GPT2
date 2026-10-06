@@ -113,3 +113,23 @@ void init_random(Tensor &a) {
     a.data[i] = dist(gen);
   }
 }
+
+Tensor embed_lookup(Tensor &table, int token_id) {
+  Tensor result({1, table.shape[1]});
+  for (int i = 0; i < result.shape[1]; i++) {
+    result.set(0, i, table.get(token_id, i));
+  }
+  return result;
+}
+
+Tensor add(Tensor &a, Tensor &b) {
+  if (a.shape != b.shape) {
+    throw ::std::invalid_argument(
+        "Shapes Mismatched, Must Match for elements addition");
+    Tensor result(a.shape);
+    for (size_t i = 0; i < a.data.size(); i++) {
+      result.data[i] = a.data[i] + b.data[i];
+    }
+    return result;
+  }
+}

@@ -127,5 +127,15 @@ int main() {
     std::cout << std::endl;
   }
 
+  int test_id = ids[0];
+  Tensor embed = embed_lookup(embedding_table, test_id);
+  std::cout << "embed_lookup for token '" << tok.decode({test_id}) << "' (id "
+            << test_id << "), shape " << embed.shape[0] << "x" << embed.shape[1]
+            << " = " << std::endl;
+  for (int j = 0; j < embed.shape[1]; j++) {
+    std::cout << embed.get(0, j) << " ";
+  }
+  std::cout << std::endl;
+
   return 0;
 }
